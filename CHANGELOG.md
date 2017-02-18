@@ -1,5 +1,13 @@
+
 # CNN Content Retriever Changelog
 
+
+## 2017-02-18, Version 1.6.2, @jamsyoung
+### Notable changes
+- Change sort order in getRecentPublishes from lastPublishedDate to lastModifiedDate
+
+# Commits
+* [[`ef044f59d7`](https://github.com/cnnlabs/cnn-content-retriever/commit/ef044f59d7)] - **getRecentPublishes**: update sort order (James Young)
 
 
 ## 2017-02-18, Version 1.6.1, @jamsyoung
