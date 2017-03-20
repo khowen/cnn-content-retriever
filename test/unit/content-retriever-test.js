@@ -130,7 +130,7 @@ describe('Content Retriever', () => {
             // nock #6
             delete this.contentRetriever;
             this.contentRetriever = new ContentRetriever('http://www.cnn.com/2016/02/12/foodanddrink/how-to-cook-perfect-steak/not-found');
-            return this.contentRetriever.getBaseContentModel().should.be.rejectedWith('Error: no content found');
+            return this.contentRetriever.getBaseContentModel().should.be.rejectedWith('no content found');
         });
     });
 
@@ -150,7 +150,7 @@ describe('Content Retriever', () => {
         it('should return an error if the url is not valid', () => {
             // nock #8
             let url = 'http://ref.hypatia.services.dmtio.net/svc/content/v2/search/collection1/id:i-dont-exist';
-            return this.contentRetriever.getGallerySlides(url).should.be.rejectedWith('Error: No slides in gallery');
+            return this.contentRetriever.getGallerySlides(url).should.be.rejectedWith('No slides in gallery: http://ref.hypatia.services.dmtio.net/svc/content/v2/search/collection1/id:i-dont-exist');
         });
     });
 
@@ -186,7 +186,7 @@ describe('Content Retriever', () => {
 
         it('should return an error if an error', () => {
             this.contentRetriever.hypatiaHost = 'https://this-is-a-fake-url';
-            return this.contentRetriever.getRecentPublishes(10, null, ['api.greatbigstory.com']).should.be.rejectedWith('Error: ');
+            return this.contentRetriever.getRecentPublishes(10, null, ['api.greatbigstory.com']).should.be.rejectedWith('getaddrinfo ENOTFOUND this-is-a-fake-urlsvc this-is-a-fake-urlsvc:443 - https://this-is-a-fake-urlsvc/content/v2/search/collection1/dataSource:api.greatbigstory.com/rows:10/sort:lastPublishDate');
         });
 
         it('should limit the number of queries to 100 if the limit passed by consumer is more than 100', () => {
@@ -233,29 +233,29 @@ describe('Content Retriever', () => {
 
 
         it('should return an error if the xml url protocol is invalid', () => {
-            return this.contentRetriever.getVideoUrl('ht://invalid-url', 'cnn').should.be.rejectedWith('Error: Invalid protocol');
+            return this.contentRetriever.getVideoUrl('ht://invalid-url', 'cnn').should.be.rejectedWith('Invalid protocol: ht:');
         });
 
 
         it('should return an error if the xml url is invalid', () => {
-            return this.contentRetriever.getVideoUrl('not-a-url-at-all', 'cnn').should.be.rejectedWith('Error: Invalid URI');
+            return this.contentRetriever.getVideoUrl('not-a-url-at-all', 'cnn').should.be.rejectedWith('Invalid URI "not-a-url-at-all"');
         });
 
 
         it('should return an error if the xml url is blank', () => {
-            return this.contentRetriever.getVideoUrl('', 'cnn').should.be.rejectedWith('Error: options.uri is a required argument');
+            return this.contentRetriever.getVideoUrl('', 'cnn').should.be.rejectedWith('options.uri is a required argument');
         });
 
 
         it('should return an error if the returned xml is invalid', () => {
             // nock #3
-            return this.contentRetriever.getVideoUrl('http://www.cnn.com/invalid-xml-test/index.xml', 'cnn').should.be.rejectedWith('Error: ');
+            return this.contentRetriever.getVideoUrl('http://www.cnn.com/invalid-xml-test/index.xml', 'cnn').should.be.rejectedWith('Text data outside of root node.\nLine: 0\nColumn: 122\nChar: v');
         });
 
 
         it('should return an error if the returned xml is blanked out (and still structured)', () => {
             // nock #4 - this happens when a video is "removed"
-            return this.contentRetriever.getVideoUrl('http://www.cnn.com/blank-xml-test/index.xml', 'cnn').should.be.rejectedWith('Error: ');
+            return this.contentRetriever.getVideoUrl('http://www.cnn.com/blank-xml-test/index.xml', 'cnn').should.be.rejectedWith('http://www.cnn.com/blank-xml-test/index.xml is blank or malformed.');
         });
     });
 
@@ -272,7 +272,7 @@ describe('Content Retriever', () => {
         it('should error url is not provided', () => {
             let referencedUrl = '';
 
-            return this.contentRetriever.getVideoReferenceModel(referencedUrl).should.be.rejectedWith('Error: ');
+            return this.contentRetriever.getVideoReferenceModel(referencedUrl).should.be.rejectedWith('options.uri is a required argument');
         });
 
         it('should fulfill if body is undefined', () => {
