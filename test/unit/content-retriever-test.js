@@ -156,6 +156,47 @@ describe('Content Retriever', () => {
 
 
 
+    describe('getContentFactors', () => {
+        const article = require('../mocks/cnn-article.json');
+
+        it('should return a promise', () => {
+            // nock #19
+            return this.contentRetriever.getContentFactors(article, 'http://data.cnn.com/content/ksa/factors.json').should.be.fulfilled;
+        });
+
+        it('should resolve if a piece of content is found with content factors', () => {
+            article.docs[0].url = 'http://www.cnn.com/2016/11/16/politics/applenews-unprecedented-trump-america/index.html';
+
+            // nock #20
+            return this.contentRetriever.getContentFactors(article, 'http://data.cnn.com/content/ksa/factors.json').should.be.fulfilled;
+        });
+
+        it('should resolve if an error', () => {
+            return this.contentRetriever.getContentFactors(article, null).should.be.fulfilled;
+        });
+    });
+
+
+
+    describe('getRecentPublishes', () => {
+        it('should return a new promise', () => {
+            // nock #21
+            return this.contentRetriever.getRecentPublishes(10, ['gallery'], ['api.greatbigstory.com']).should.be.fulfilled;
+        });
+
+        it('should return an error if an error', () => {
+            this.contentRetriever.hypatiaHost = 'https://this-is-a-fake-url';
+            return this.contentRetriever.getRecentPublishes(10, null, ['api.greatbigstory.com']).should.be.rejectedWith('Error: ');
+        });
+
+        it('should limit the number of queries to 100 if the limit passed by consumer is more than 100', () => {
+            // nock #22
+            return this.contentRetriever.getRecentPublishes(200, ['gallery'], ['api.greatbigstory.com']).should.be.fulfilled;
+        });
+    });
+
+
+
     describe('getRelatedContent', () => {
         it('should return a promise when parsing a gallery with no paragraphs', () => {
             const data = require('../mocks/gallery.json');
@@ -291,4 +332,26 @@ describe('Content Retriever', () => {
     });
 
 
+
+    describe('getVideoReferenceModel', () => {
+        it('should return a promise', () => {
+            let referencedUrl = 'http://hypatia.services.dmtio.net/svc/content/v2/search/collection1/id:h_5b5f675a37090ffe3da98fe9dc71ed02';
+
+            // nock #17
+            return this.contentRetriever.getVideoReferenceModel(referencedUrl).should.be.fulfilled;
+        });
+
+        it('should error url is not provided', () => {
+            let referencedUrl = '';
+
+            return this.contentRetriever.getVideoReferenceModel(referencedUrl).should.be.rejectedWith('Error: ');
+        });
+
+        it('should fulfill if body is undefined', () => {
+            let referencedUrl = 'http://hypatia.services.dmtio.net/svc/content/v2/search/collection1/id:h_5b5f67da98fe9dc71ed02';
+
+            // nock #18
+            return this.contentRetriever.getVideoReferenceModel(referencedUrl).should.be.fulfilled;
+        });
+    });
 });
