@@ -203,6 +203,39 @@ describe('Content Retriever', () => {
             return this.contentRetriever.getRelatedContent(data).should.be.fulfilled;
         });
 
+        describe('processRelatedMedia', () => {
+            it('should return a promise when parsing a gallery with no paragraphs', () => {
+                const data = require('../mocks/cnn-video.json');
+                return this.contentRetriever.getRelatedContent(data).should.be.fulfilled;
+            });
+
+            it('should return if there is not a media.type of reference', () => {
+                const data = require('../mocks/cnn-politics-video.json');
+                return this.contentRetriever.getRelatedContent(data).should.be.fulfilled;
+            });
+
+            it('should process a referenced video', () => {
+                const data = require('../mocks/cnn-money-article.json');
+
+                // nock #23 & 24
+                return this.contentRetriever.getRelatedContent(data).should.be.fulfilled;
+            });
+
+            it('should fail', () => {
+                const data = require('../mocks/cnn-money-article.json');
+                data.docs[0].dataSource = null;
+
+                // nock #23 & 24
+                return this.contentRetriever.getRelatedContent(data).should.be.fulfilled;
+            });
+
+            it('should fail if data is missing relatedMedia', () => {
+                const data = require('../mocks/cnn-money-article.json');
+                data.docs[0] = '';
+                return this.contentRetriever.getRelatedContent(data).should.be.rejectedWith('Cannot read property \'media\' of undefined');
+            });
+        });
+
         // it('should return an error if an error happens and I have no idea how to test that')
     });
 
