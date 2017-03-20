@@ -261,6 +261,30 @@ describe('Content Retriever', () => {
 
 
 
+    describe('getVideoReferenceModel', () => {
+        it('should return a promise', () => {
+            let referencedUrl = 'http://hypatia.services.dmtio.net/svc/content/v2/search/collection1/id:h_5b5f675a37090ffe3da98fe9dc71ed02';
+
+            // nock #17
+            return this.contentRetriever.getVideoReferenceModel(referencedUrl).should.be.fulfilled;
+        });
+
+        it('should error url is not provided', () => {
+            let referencedUrl = '';
+
+            return this.contentRetriever.getVideoReferenceModel(referencedUrl).should.be.rejectedWith('Error: ');
+        });
+
+        it('should fulfill if body is undefined', () => {
+            let referencedUrl = 'http://hypatia.services.dmtio.net/svc/content/v2/search/collection1/id:h_5b5f67da98fe9dc71ed02';
+
+            // nock #18
+            return this.contentRetriever.getVideoReferenceModel(referencedUrl).should.be.fulfilled;
+        });
+    });
+
+
+
     describe.skip('processParagraphs', () => {
         // it('should process paragraphs that do not have any embeds', () => {
         //     const data = require('../mocks/cnn-article.json');
@@ -331,27 +355,4 @@ describe('Content Retriever', () => {
         // });
     });
 
-
-
-    describe('getVideoReferenceModel', () => {
-        it('should return a promise', () => {
-            let referencedUrl = 'http://hypatia.services.dmtio.net/svc/content/v2/search/collection1/id:h_5b5f675a37090ffe3da98fe9dc71ed02';
-
-            // nock #17
-            return this.contentRetriever.getVideoReferenceModel(referencedUrl).should.be.fulfilled;
-        });
-
-        it('should error url is not provided', () => {
-            let referencedUrl = '';
-
-            return this.contentRetriever.getVideoReferenceModel(referencedUrl).should.be.rejectedWith('Error: ');
-        });
-
-        it('should fulfill if body is undefined', () => {
-            let referencedUrl = 'http://hypatia.services.dmtio.net/svc/content/v2/search/collection1/id:h_5b5f67da98fe9dc71ed02';
-
-            // nock #18
-            return this.contentRetriever.getVideoReferenceModel(referencedUrl).should.be.fulfilled;
-        });
-    });
 });
