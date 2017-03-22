@@ -10,6 +10,18 @@
 * [[`ef044f59d7`](https://github.com/cnnlabs/cnn-content-retriever/commit/ef044f59d7)] - **getRecentPublishes**: update sort order (James Young)
 
 
+## 2017-03-22, Version 1.7.0, @jamsyoung
+### Notable changes
+- Handle an error when cdnUrls is undefined
+
+# Commits
+
+* [[`9fa10498ac`](https://github.com/cnnlabs/cnn-content-retriever/commit/9fa10498ac)] - Merge branch 'develop' of github.com:cnnlabs/cnn-content-retriever into develop (James Young)
+* [[`409ea0417b`](https://github.com/cnnlabs/cnn-content-retriever/commit/409ea0417b)] - **(SEMVER-MINOR)** **content-retriever**: add detailed log message (#9) (Katie Owen) [#9](https://github.com/cnnlabs/cnn-content-retriever/pull/9)
+
+
+
+
 ## 2017-02-18, Version 1.6.1, @jamsyoung
 ### Notable changes
 - Add debug logging
