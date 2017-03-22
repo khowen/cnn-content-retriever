@@ -186,7 +186,7 @@ describe('Content Retriever', () => {
 
         it('should return an error if an error', () => {
             this.contentRetriever.hypatiaHost = 'https://this-is-a-fake-url';
-            return this.contentRetriever.getRecentPublishes(10, null, ['api.greatbigstory.com']).should.be.rejectedWith('getaddrinfo ENOTFOUND this-is-a-fake-urlsvc this-is-a-fake-urlsvc:443 - https://this-is-a-fake-urlsvc/content/v2/search/collection1/dataSource:api.greatbigstory.com/rows:10/sort:lastPublishDate');
+            return this.contentRetriever.getRecentPublishes(10, null, ['api.greatbigstory.com']).should.be.rejectedWith('getaddrinfo ENOTFOUND this-is-a-fake-urlsvc this-is-a-fake-urlsvc:443 - https://this-is-a-fake-urlsvc/content/v2/search/collection1/dataSource:api.greatbigstory.com/rows:10/sort:lastModifiedDate');
         });
 
         it('should limit the number of queries to 100 if the limit passed by consumer is more than 100', () => {
